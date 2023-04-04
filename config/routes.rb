@@ -11,5 +11,8 @@ Rails.application.routes.draw do
     resources :users
   end
 
+  resources :blogs 
+
+
 
 end

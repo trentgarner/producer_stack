@@ -1,0 +1,19 @@
+<h1 class="mb-3">Producer Stack Blog</h1>
+
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+  <% @blogs.each do |blog| %>
+    <div class="col">
+      <div class="card h-100">
+        <img class="card-img-top"> <%= image_tag "producer_stack.svg" %>
+        <div class="card-body">
+          <h5 class="card-title"> <%= link_to blog.title, blog_path(blog.id) %>
+          <p class="card-text"><%= blog.content %></p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

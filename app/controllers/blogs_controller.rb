@@ -1,12 +1,20 @@
 class BlogsController < ApplicationController
 
   def index
+    @blogs = Blog.all
   end
 
-  def show
+  def create
+  end
+
+  def new 
   end
 
   def edit 
+  end
+
+  def show
+    @blog = Blog.find_by(id: params[:id])
   end
 
   def update 
@@ -14,6 +22,6 @@ class BlogsController < ApplicationController
 
   def destroy 
   end
-  
+
 end
 
