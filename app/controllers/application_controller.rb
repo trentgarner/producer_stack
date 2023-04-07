@@ -12,13 +12,12 @@ class ApplicationController < ActionController::Base
   end
 
   def home 
-
   end
 
   private 
 
   def after_sign_out_path_for(user)
-    home_path
+    new_user_session_path
   end
 
 

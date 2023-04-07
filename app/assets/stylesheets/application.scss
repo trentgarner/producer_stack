@@ -1,9 +1,10 @@
 @import  'bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Sen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sen&family=Titillium+Web:wght@600&display=swap');
 
 h1 {
   font-family: 'Sen', sans-serif;
-}
+  font-family: 'Titillium Web', sans-serif;}
 
 .hero-home {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), image-url('hero_1.png');
