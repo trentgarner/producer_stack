@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  # before_action :configure_sign_in_params, only: [:create]
+  #before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
   def new
-    @user = User.find_by_id(params[:id])
+    @user = User.new
   end
 
-  def create 
-    @user = User.find_by_id.(params[:id])
+  def create
+    user = User.find_by(email: params[:session][:email].downcase)
+    if user && user.authenticate(params[:session][:password])
+      sign_in user
+      redirect_to user
+    else
+      flash.now[:error] = 'Invalid email/password combination'
+      render 'new'
+    end
   end
-
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
 
   # DELETE /resource/sign_out
   # def destroy
