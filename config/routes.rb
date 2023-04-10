@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get 'home', to: 'application#home'
 
@@ -13,6 +12,4 @@ Rails.application.routes.draw do
 
   resources :blogs 
 
-  resources :sessions, only: [:new, :create, :destroy]
-  
 end
