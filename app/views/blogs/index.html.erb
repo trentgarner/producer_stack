@@ -1,19 +1,22 @@
-<h1 class="mb-3">Producer Stack Blog</h1>
+<h1 class="mb-3 text-center">ProducerStack Blog</h1>
 
 
-<div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
-  <%= @blogs.each do |blog| %>
-    <div class="col">
-      <div class="card h-100">
-        <img class="card-img-top"> <%= image_tag "producer_stack.svg" %>
-        <div class="card-body">
-          <h5 class="card-title"><%= link_to blog.title, blog_path(blog) %></h5>
-          <p class="card-text"><%= blog.content %></p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Put time updated here</small>
+<div class="d-flex justify-content-center"> 
+  <div class="row mb-3">
+    <% @blogs.each do |blog| %>
+      <div class="col-4 p-4">
+        <div class="card h-100">
+          <%= image_tag "producer_stack.svg", class: "card-img-top" %>
+          <div class="card-body">
+            <h5 class="card-title text-center"><%= link_to blog.title, blog_path(blog) %></h5>
+            <hr>
+            <p class="card-text"><%= blog.content %></p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted float-end"> <%= blog.updated_at.strftime('%B %e, %Y %l:%M %p') %></small>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

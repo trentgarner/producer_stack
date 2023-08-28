@@ -1,15 +1,17 @@
 <div class="d-flex justify-content-center"> 
   <div class="row mb-3">
     <div class="col">
-      <div class="card h-100">
-        <%= image_tag "producer_stack.svg", class: "card-img-top" %>
+      <div class="card h-100 blog-card"> 
+        <%= image_tag "producer_stack.svg", class: "card-img-top blog-img p-3" %> 
         <div class="card-body">
           <h5 class="card-title text-center"><%= @blog.title %></h5>
           <hr>
           <p class="card-text"><%= @blog.content %></p>
         </div>
         <div class="card-footer">
-          <small class="text-muted float-end"> <%= @blog.updated_at.strftime('%B %e, %Y %l:%M %p') %></small>
+          <small class="text-muted float-end">
+            <%= @blog.updated_at.in_time_zone("Mountain Time (US & Canada)").strftime('%B %e, %Y %l:%M %p %Z') %>
+          </small>
         </div>
       </div>
     </div>
