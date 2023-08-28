@@ -37,11 +37,17 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Sign up</a>
+              <li>
+                <hr class="dropdown-divider">
               </li>
-              <li class="nav-item">
-                <%= button_to "Sign In", new_user_session_path, class: "btn btn-info dropdown-item" %>
+
+              <% if user = User %>
+                <% else %>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Sign up</a>
+              </li>
+                  <%= button_to "Sign In", new_user_session_path, class: "btn btn-info dropdown-item" %>
+                <% end %>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,6 +56,7 @@
                 <ul class="dropdown-menu dropdown-menu-dark">
                   <li><a class="dropdown-item" href="#">Blog</a></li>
                   <li><a class="dropdown-item" href="#">Community</a></li>
+                  <li><a class="dropdown-item" href="#">Beats</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>

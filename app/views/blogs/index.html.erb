@@ -2,16 +2,16 @@
 
 
 <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
-  <% @blogs.each do |blog| %>
+  <%= @blogs.each do |blog| %>
     <div class="col">
       <div class="card h-100">
         <img class="card-img-top"> <%= image_tag "producer_stack.svg" %>
         <div class="card-body">
-          <h5 class="card-title"> <%= link_to blog.title, blog_path(blog.id) %>
+          <h5 class="card-title"><%= link_to blog.title, blog_path(blog) %></h5>
           <p class="card-text"><%= blog.content %></p>
         </div>
         <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
+          <small class="text-muted">Put time updated here</small>
         </div>
       </div>
     </div>

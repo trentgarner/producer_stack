@@ -35,6 +35,16 @@ gem 'bootstrap'
 
 gem 'pry'
 
+gem 'bulma-rails'
+
+gem 'simple_form'
+
+gem 'gravatar_image_tag'
+
+gem 'carrierwave'
+
+gem 'mini_magick'
+
 
 
 # Use Redis adapter to run Action Cable in production
@@ -61,6 +71,11 @@ gem "sassc-rails"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'better_errors'
+
+  gem 'guard'
+
+
 end
 
 group :development do
