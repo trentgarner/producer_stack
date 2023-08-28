@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  resources :blogs, only: [:index, :show]
-
-     
+  resources :blogs
+    
 end
