@@ -1,18 +1,30 @@
 <div class="row">
   <div class="col text-center">
-    <h1 class="me-3">Admin User Show Page</h1>
+    <h1 class="me-3">Admin Show page</h1>
   </div>
-  <section>
-    <div class="row mb-4 p-4 text-center">
-      <div class="card col-4 p-3">
-        Users
-      </div>
-      <div class="card col-4 p-3">
-        Beats
-      </div>
-      <div class="card col-4 p-3">
-        Blog posts
-      </div>
-    </div>
-  <section>
+  <table class="table-dark">
+    <thead>
+    <tr>
+      <th scope="col">Users</th>
+      <th scope="col">Beats</th>
+      <th scope="col">Blog posts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><%= @user.all%></th>
+      <td><%= @user.first_name&.last_name%></td>
+    </tr>
+    <tr>
+      <th scope="row">Beats.all</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row"><%= @blogs.all%></th>
+      <td><%= @blogs.title%> </td>
+    </tr>
+  </tbody>
+  </table>
 </div>

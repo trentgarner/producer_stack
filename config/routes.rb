@@ -5,14 +5,16 @@ Rails.application.routes.draw do
 
   root "application#router"
 
-  get 'store', to: 'store#index'
+  get 'store', to: 'beats#index'
   get 'home', to: 'application#home'
 
   resources :users 
   namespace :admin do 
+    get 'dashboard', to: 'users#admin_dashboard'
     resources :users
   end
 
   resources :blogs
     
 end
+
