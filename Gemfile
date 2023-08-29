@@ -44,6 +44,8 @@ gem 'mini_magick'
 
 gem 'pg'
 
+gem 'railties'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

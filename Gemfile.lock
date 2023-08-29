@@ -315,6 +315,7 @@ DEPENDENCIES
   pry
   puma
   rails (~> 7.0.3, >= 7.0.3.1)
+  railties
   sassc-rails
   selenium-webdriver
   simple_form
