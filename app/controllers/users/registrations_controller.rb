@@ -9,10 +9,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    build_resource(signup_params)
+
+    if resource.save
+      sign_up(resource_name, resource)
+      redirect_to after_sign_up_path_for(resource)
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      flash[:error] = resource.errors.full_messages.to_sentence
+      redirect_to new_user_registration_path
+    end
+  end
 
   # GET /resource/edit
   # def edit

@@ -41,7 +41,7 @@
                 <hr class="dropdown-divider">
               </li>
 
-              <% if user = User %>
+              <% if @user = signed_in? %>
                 <% else %>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Sign up</a>
@@ -54,7 +54,7 @@
                   More
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="#">Blog</a></li>
+                  <li><a class="dropdown-item" href="<%= blogs_path %>">Blog</a></li>
                   <li><a class="dropdown-item" href="#">Community</a></li>
                   <li><a class="dropdown-item" href="#">Beats</a></li>
                   <li>
@@ -62,9 +62,7 @@
                   </li>
                   <li><a class="dropdown-item" href="#">Your Profile</a></li>
                   <% if current_user %>
-                    <li><a class="nav-item">
-                      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-info dropdown-item" %>
-                    </li> </a>
+                    <li><a class="nav-item"><%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-info dropdown-item" %></li> </a>
                   <% end %>
                 </ul>
               </li>
