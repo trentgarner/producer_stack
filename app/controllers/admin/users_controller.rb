@@ -7,7 +7,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def admin_dashboard 
-    @user = User.all
+    @user = current_user
+    @users = User.all
     @blogs = Blog.all
   end
 
