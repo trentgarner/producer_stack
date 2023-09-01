@@ -2,69 +2,72 @@
   <div class="col text-center">
     <h1 class="me-3">Admin dashboard</h1>
   </div>
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-6">
-      <h2 class="text-center">Users</h2>
-      <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @user.each do |user| %>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-10">
+        <h2 class="text-center">Users</h2>
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
             <tr>
-              <td><%= user.id %></td>
-              <td><%= user.first_name %></td>
-              <td><%= user.email %></td>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-md-6">
-      <h2 class="text-center">Blog Posts</h2>
-      <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @blogs.each do |blog| %>
+          </thead>
+          <tbody>
+            <% @user.each do |user| %>
+              <tr>
+                <td><%= user.id %></td>
+                <td><%= link_to user.first_name, user_path(user) %></td>
+                <td><%= user.email %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-10">
+        <h2 class="text-center">Blog Posts</h2>
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
             <tr>
-              <td><%= blog.id %></td>
-              <td><%= blog.title %></td>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Content
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <%
+          </thead>
+          <tbody>
+            <% @blogs.each do |blog| %>
+              <tr>
+                <td><%= blog.id %></td>
+                <td><%= link_to blog.title, blog_path(blog) %></td>
+                <td><%= truncate_words(blog.content, 5)%></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%
 =begin%>
  <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @beats.each do |beat| %>
+          <thead>
             <tr>
-              <td><%= beat.id %></td>
-              <td><%= beat.title %></td>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Artist</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table> 
+          </thead>
+          <tbody>
+            <% @beats.each do |beat| %>
+              <tr>
+                <td><%= beat.id %></td>
+                <td><%= beat.title %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>  
 <%
 =end%>
+      </div>
     </div>
   </div>
-</div>
 
 </div>

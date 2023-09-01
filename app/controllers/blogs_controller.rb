@@ -34,12 +34,12 @@ class BlogsController < ApplicationController
       render :edit
     end
   end
-
+  
   def destroy
+    @blog = Blog.find(params[:id])
     @blog.destroy
-    redirect_to blogs_url, notice: 'Blog was successfully destroyed.'
+    redirect_to blogs_path, notice: "Blog was successfully deleted."
   end
-
 
   private 
 

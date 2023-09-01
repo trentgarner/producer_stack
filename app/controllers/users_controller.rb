@@ -2,11 +2,12 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def show 
-    @user = User.find_by(id: params[:id])
+    @user = set_user
+    @users = User.all
   end
 
   def edit
-
+    @user = set_user
   end
 
   def update
