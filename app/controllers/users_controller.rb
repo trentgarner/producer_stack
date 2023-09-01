@@ -1,18 +1,19 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def show 
-    @user = set_user
+  def index
     @users = User.all
   end
 
+  def show
+  end
+
   def edit
-    @user = set_user
   end
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to @user, flash: { notice: 'User was successfully updated.' }
     else
       render :edit
     end
@@ -20,7 +21,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    redirect_to users_url, flash: { notice: 'User was successfully destroyed.' }
   end
 
   private
@@ -30,8 +31,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
+    redirect_to users_url, alert: 'User not found' if @user.nil?
   end
-
-  
 end
