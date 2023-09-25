@@ -1,7 +1,7 @@
 class BeatsController < ApplicationController
 
   def index
-    @beats = beat.all
+    @beats = Beat.all
   end
 
 end

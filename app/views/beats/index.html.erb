@@ -1,1 +1,31 @@
-<h1>Beats Index</h1>
+<div class="row text-center">
+  <div class="col">
+    <h1 class="me-3">Beats</h1>
+  </div>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-10 text-center">
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>Title</th>
+              <th>Producer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%
+=begin%>
+            <% @beats.each do |beat| %>
+              <tr>
+                <td><%= beat.id %></td>
+                <td><%= link_to beat.title, user_path(user) %></td>
+              </tr>
+            <% end %> 
+<%
+=end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
