@@ -73,8 +73,6 @@ group :development, :test do
   gem 'better_errors'
 
   gem 'guard'
-
-
 end
 
 group :development do

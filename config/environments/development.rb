@@ -33,6 +33,14 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Precompile additional assets. Defaults to [application.js, application.css, favicon.ico, manifest.json, manifest.js]
+  config.assets.precompile ||= []
+  config.assets.precompile += ['es-module-shims.min.js']
+
+  # Preload additional assets. Defaults to [ActionCable, ActionText, and all UJS helpers]
+  config.assets.preload ||= []
+  config.assets.preload << 'es-module-shims.min.js'
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 

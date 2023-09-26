@@ -5,7 +5,6 @@ Rails.application.routes.draw do
 
   root "application#router"
 
-  get 'store', to: 'beats#index'
   get 'home', to: 'application#home'
 
   resources :users 
@@ -15,7 +14,10 @@ Rails.application.routes.draw do
   end
 
   resources :blogs
+
   resources :beats
+    get 'stream_audio', to: 'beats#index'
+    get 'stream_audio', to: 'beats#show'
     
 end
 
