@@ -10,9 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_28_225852) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_010719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "beats", force: :cascade do |t|
+    t.binary "beat"
+    t.string "title", null: false
+    t.string "artist", null: false
+    t.string "genre"
+    t.text "description"
+    t.decimal "duration", precision: 6, scale: 2
+    t.datetime "upload_date"
+    t.decimal "price", precision: 10, scale: 2
+    t.string "license_type"
+    t.integer "sample_rate"
+    t.integer "bit_depth"
+    t.text "tags"
+    t.integer "downloads_count", default: 0
+    t.integer "plays_count", default: 0
+    t.decimal "rating", precision: 10
+    t.binary "cover_art"
+    t.string "cover_art_url"
+    t.string "beat_file_name"
+    t.string "beat_content_type"
+    t.integer "beat_file_size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "blogs", force: :cascade do |t|
     t.string "title"
