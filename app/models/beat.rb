@@ -1,5 +1,5 @@
 class Beat < ApplicationRecord
-  mount_uploader :beat_file, BeatUploader
+  mount_uploader :beat, BeatUploader
   has_one_attached :cover_art
 
   validates :title, presence: true
@@ -10,11 +10,11 @@ class Beat < ApplicationRecord
   validates :bit_depth, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
 
   def beat_file_url
-    beat_file.url # Use .url to get the URL
+    beat.url # Use .url to get the URL
   end
 
   def beat_file_content_type
-    beat_file.content_type
+    beat.content_type
   end
 
   def cover_art_url

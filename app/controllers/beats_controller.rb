@@ -10,9 +10,9 @@ class BeatsController < ApplicationController
 
   def create
     @beat = Beat.new(beat_params)
-    @beat.beat_content_type = params[:beat][:beat].content_type  # Set content type
-  
-    puts "Beat Content Type: #{@beat.beat_content_type}" 
+    # beat_file = beat_params["beat"]
+    # @beat.beat_content_type = beat_file.content_type
+    # @beat.beat = beat_file.tempfile
   
     if @beat.save
       redirect_to @beat, notice: 'Beat upload was successful!'

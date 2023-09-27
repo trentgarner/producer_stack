@@ -1,14 +1,27 @@
 <div class="text-center">
   <h1><%= @beat.title %></h1>
-  <div class="col-auto m-4">
-    <% if @beat.beat.present? %>
-      <audio controls>
-        <source src="<%= @beat.beat_file_url %>" type="<%= @beat.beat_file_content_type %>">
-        Your browser does not support the audio element.
-      </audio>
-    <% else %>
-      <p>No audio available for this beat.</p>
-    <% end %>
+  <div class="row">
+    <div class="col m-4">
+     <div class="col d-flex flex-column align-items-center"> 
+       <% if @beat.cover_art.present? %>
+        <%=image_tag(url_for(@beat.cover_art), style: "height: 150px;", class: "mb-3")%>
+       <% else %>
+        <%= image_tag("Producer_stack-removebg-preview.png", alt: "Profile Image", style: "height: 150px;") %>
+       <% end %>
+        <% if @beat.beat.present? %>
+          <audio controls>
+            <source src="<%= @beat.beat_file_url %>" type="<%= @beat.beat_file_content_type %>">
+            Your browser does not support the audio element.
+          </audio>
+        <% else %>
+          <p>No audio available for this beat.</p>
+        <% end %>
+    </div>
   </div>
 </div>
 
+<div class="text-center">
+  <div class="actions m-4">
+    <%= link_to "Back to Beats", beats_path, class: "btn btn-dark mt-3" %>
+  </div>
+</div>
