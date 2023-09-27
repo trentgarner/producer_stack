@@ -2,8 +2,7 @@
 
 // Remove the ES6 import statements
 //= require es-module-shims.min
-//= require application-43bf9cb
-
+import './wavesurfer-config'; // Include your custom Wavesurfer configuration file
 // import "popper"
 // import "bootstrap"
 
@@ -16,3 +15,4 @@ document.addEventListener("turbo:load", function () {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 });
+
