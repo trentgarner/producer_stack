@@ -1,6 +1,7 @@
 class Beat < ApplicationRecord
   mount_uploader :beat, BeatUploader
   has_one_attached :cover_art
+  belongs_to :user
 
   validates :title, presence: true
   validates :artist, presence: true

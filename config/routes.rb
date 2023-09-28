@@ -16,8 +16,5 @@ Rails.application.routes.draw do
   resources :blogs
 
   resources :beats
-    get 'stream_audio', to: 'beats#index'
-    get 'stream_audio', to: 'beats#show'
-    
-end
 
+end
