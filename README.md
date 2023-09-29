@@ -42,13 +42,11 @@ Ruby on Rails
 Devise for authentication
 ActiveRecord for database management
 CarrierWave and Cloudinary for image and file uploading
-Markdown for rich text formatting
 Bootstrap for responsive styling
+
 Contributing
 We welcome contributions from the community to improve Producer Stack. If you'd like to contribute, please follow our Contributing Guidelines.
 
-License
-This project is licensed under the MIT License.
 
 Contact
-If you have any questions, suggestions, or issues, please feel free to open an issue or contact us at your-email@example.com.
+If you have any questions, suggestions, or issues, please feel free to open an issue or contact us at trentongarner.13@gmail.com.
