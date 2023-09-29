@@ -1,0 +1,90 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/4.0.1/wavesurfer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/4.0.1/plugin/wavesurfer.medielement.min.js"></script>
+
+<div class="container">
+  <h1 class="text-center mt-4">Beats</h1>
+  <ul class="list-group">
+    <% @beats.each do |beat| %>
+      <li class="list-group-item border-0">
+        <div class="row justify-content-center">
+          <div class="col-sm-3 ms-4 d-flex align-items-center">
+            <% if beat.cover_art.present? %>
+              <%= image_tag url_for(beat.cover_art), class: "img-fluid", style: "max-height: 250px; max-width: 250px;" %>
+            <% else %>
+              <%= image_tag "producer_stack.svg", class: "img-fluid", style: "max-height: 250px; max-width: 250px;" %>
+            <% end %>
+          </div>
+          <div class="col-md-8 mb-3">
+            <h5 class="card-title mb-1"><%= link_to beat.title, beat_path(beat) %></h5>
+            <div class="mb-1">
+              <p class="mb-1"><strong>Producer:</strong> <%= beat.artist %></p>
+              <p class="mb-1"><strong>Genre:</strong> <%= beat.genre %></p>
+              <p class="mb-1"><strong>Description:</strong> <%= beat.description %></p>
+            </div>
+            <% if beat.beat.present? %>
+              <div class="audio-player mt-3">
+                <!-- Add a container for the waveform visualization -->
+                <div id="waveform-<%= beat.id %>"style="width: 100%; height: 150px; margin-bottom: -40px;"></div>
+                <div class="btn-group mt-0">
+                  <!-- Play/Pause Button -->
+                  <button id="play-pause-<%= beat.id %>" class="btn btn-danger">
+                    <i class="fas fa-play"></i> 
+                  </button>
+                  <!-- Download Button -->
+                  <a href="<%= beat.beat_file_url %>" download="<%= beat.title %>.wav" class="btn btn-danger text-light mr-3" style="border-start-end-radius: 5px; border-start-end-radius: 5px;">Download</a> 
+                  <!-- Volume Control -->
+                  <div class="d-flex align-items-center ms-3">
+                    <label for="volume-<%= beat.id %>" class="me-2">Volume:</label>
+                    <input id="volume-<%= beat.id %>" type="range" min="0" max="1" step="0.01" value="1" class="form-range" style="width: 80px; color: red;">
+                  </div>
+                </div>
+              </div>
+              <!-- Initialize Wavesurfer.js -->
+              <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                  var wavesurfer<%= beat.id %> = WaveSurfer.create({
+                    container: '#waveform-<%= beat.id %>',
+                    waveColor: '#bcb9b8',
+                    progressColor: '#f24545',
+                    cursorColor: '#666666',
+                    cursorWidth: 3,
+                    barWidth: 3,
+                    barHeight: 3,
+                    barGap: null,
+                    hideScrollbar: true,
+                    normalize: true,
+                    height: 75,
+                    backend: 'MediaElement', // Use the MediaElement backend for audio controls
+                  });
+
+                  wavesurfer<%= beat.id %>.load('<%= beat.beat_file_url %>');
+
+                  // Add event listener to Play/Pause button
+                  var playPauseButton<%= beat.id %> = document.querySelector('#play-pause-<%= beat.id %>');
+                  playPauseButton<%= beat.id %>.addEventListener('click', function () {
+                    wavesurfer<%= beat.id %>.playPause();
+                    if (wavesurfer<%= beat.id %>.isPlaying()) {
+                      playPauseButton<%= beat.id %>.textContent = 'Pause';
+                    } else {
+                      playPauseButton<%= beat.id %>.textContent = 'Play';
+                    }
+                  });
+
+                  // Add event listener to Volume Control
+                  var volumeControl<%= beat.id %> = document.querySelector('#volume-<%= beat.id %>');
+                  volumeControl<%= beat.id %>.addEventListener('input', function () {
+                    wavesurfer<%= beat.id %>.setVolume(parseFloat(volumeControl<%= beat.id %>.value));
+                  });
+                });
+              </script>
+            <% else %>
+              <p class="text-center">No audio available for this beat.</p>
+            <% end %>
+            <small class="text-muted float-end"> <%= beat.updated_at.strftime('%B %e, %Y %l:%M %p') %></small>
+          </div>
+        </div>
+        <hr>
+      </li>
+    <% end %>
+  </ul>
+</div>

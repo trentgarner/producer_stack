@@ -1,74 +1,111 @@
 <!DOCTYPE html>
-<html class="h-100">
+<html>
   <head>
+    <%= favicon_link_tag asset_path('producer_stack.png') %>
     <title>ProducerStack</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', crossorigin: 'anonymous' %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "rails-ujs" %>
+    <%= javascript_include_tag 'wavesurfer-config' %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preload" href="/assets/es-module-shims.min-4ca9b3dd5e434131e3bb4b0c1d7dff3bfd4035672a5086deec6f73979a49be73.js" as="script">
+    <link rel="preload" href="/assets/application-43bf9cbc561a4932d5dbd0e1e07e9066583ad47f49c71074a2569ac5e3106599.js" as="script">
+
+
+    <link rel="modulepreload" href="/assets/es-module-shims.min-4ca9b3dd5e434131e3bb4b0c1d7dff3bfd4035672a5086deec6f73979a49be73.js" as="script">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   </head>
 
-  <body class="h-100">
-
+  <body>
     <!-- ===========NAVBAR============ -->
-    <nav class="navbar sticky-top navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Offcanvas dark navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+  <nav class="navbar navbar-dark bg-dark sticky-top navbar-dark fixed-top">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="navbar-brand">
+            <% if user_signed_in? %>
+              <%= link_to user_path(current_user), class: "dropdown-item" do %>
+                <%= image_tag("Producer_stack-removebg-preview.png", alt: "Profile Image", style: "height: 150px;") %>
+              <% end %>
+            <% end %>
           </div>
-          <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        </div>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"><b>Producer</b><i>Stack</i></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <% if user_signed_in? %>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="<%= user_path(current_user) %>">Home</a>
+                <a class="nav-link active" aria-current="page" href="<%= new_beat_path %>">Upload Beats</a>
               </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+            <% else %>
               <li class="nav-item">
                 <a class="nav-link" href="#">Sign up</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Sign In</a>
+                <%= button_to "Sign In", new_user_session_path, class: "btn btn-info dropdown-item" %>
               </li>
-              <% if current_user %>
-                <li class="nav-item">
-                  <%= button_to "Sign Out", destroy_user_session_path(current_user), method: :delete, class: "nav-link" %>
-                  <% else %>
-                </li> 
-              <% end %>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="#">Blog</a></li>
-                  <li><a class="dropdown-item" href="#">Community</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Your Profile</a></li>
-                </ul>
+              <li>
+                <hr class="dropdown-divider">
               </li>
-            </ul>
-            <form class="d-flex mt-3" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-success" type="submit">Search</button>
-            </form>
-          </div>
+            <% end %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                More
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <% if user_signed_in? && current_user.role == "admin" %>
+                  <li><a class="dropdown-item" href="<%= admin_dashboard_path %>">Admin Dashboard</a></li>
+                <% end %>
+                <li><a class="dropdown-item" href="<%= blogs_path %>">Blog</a></li>
+                <li><a class="dropdown-item" href="#">Community</a></li>
+                <li><a class="dropdown-item" href="<%= beats_path %>">Beats</a></li>
+                <hr class="dropdown-divider">
+                <% if current_user %>
+                  <li><%= link_to "Your Profile", user_path(current_user), class: "dropdown-item" %></li>
+                  <li><%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-info dropdown-item" %></li>
+                <% end %>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
+
+
     <!-- ===========END NAVBAR============ -->
-    <div class="container-fluid h-100 m-3">
-      <%= yield %>
+
+    <div class=" <%= set_background %> hero p-5 mb-4">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold text-light">Producer<i>STACK</i> is <b>HERE.</b></h1>
+        <p class="col-md-5 text-light">The innovative, proactive, music producer community solution.</p>
+        <a class="btn btn-outline text-light bg-danger" href="#">Learn More</a>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+     <%= yield %>
     </div>
     <%= render 'layouts/footer' %>
   </body>
