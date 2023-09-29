@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center">
+  <div class="text-center">
+    <h1 class="mb-3">Producer<i>STACK</i> Blog</h1>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <div class="p-3">
+    <%= link_to "New Blog Post", new_blog_path, class: "btn btn-info mt-3" %>
+  </div>
+</div>
+
+
+
+<div class="d-flex justify-content-center"> 
+  <div class="row mb-3">
+    <% @blogs.each do |blog| %>
+      <div class="col-4 p-4">
+        <div class="card h-100">
+          <%= image_tag "producer_stack.svg", class: "card-img-top" %>
+          <div class="card-body">
+            <h5 class="card-title text-center"><%= link_to blog.title, blog_path(blog) %></h5>
+            <hr>
+            <p class="card-text"><%= blog.content %></p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted float-end"> <%= blog.updated_at.strftime('%B %e, %Y %l:%M %p') %></small>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

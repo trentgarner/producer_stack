@@ -12,11 +12,13 @@ module BeatWebsite
     config.load_defaults 7.0
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    require 'carrierwave/orm/activerecord'
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.assets.precompile += ['application.js', 'es-module-shims.min.js']
+
   end
 end

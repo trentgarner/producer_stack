@@ -1,7 +1,10 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 
-import "popper"
-import "bootstrap"
+// Remove the ES6 import statements
+//= require es-module-shims.min
+import './wavesurfer-config'; // Include your custom Wavesurfer configuration file
+// import "popper"
+// import "bootstrap"
 
 document.addEventListener("turbo:load", function () {
   // This code is copied from Bootstrap's docs. See link below.
@@ -12,3 +15,4 @@ document.addEventListener("turbo:load", function () {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 });
+

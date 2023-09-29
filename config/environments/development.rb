@@ -33,6 +33,14 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Precompile additional assets. Defaults to [application.js, application.css, favicon.ico, manifest.json, manifest.js]
+  config.assets.precompile ||= []
+  config.assets.precompile += ['es-module-shims.min.js']
+
+  # Preload additional assets. Defaults to [ActionCable, ActionText, and all UJS helpers]
+  config.assets.preload ||= []
+  config.assets.preload << 'es-module-shims.min.js'
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
@@ -58,6 +66,9 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  #devise
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
