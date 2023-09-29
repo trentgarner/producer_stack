@@ -1,4 +1,3 @@
-Producer Stack
 Producer Stack is a community-driven blog and platform designed exclusively for music producers. It provides a space for music producers to connect, share their music, exchange tips, and offer kudos for outstanding tracks. Whether you're a seasoned producer or just starting out, Producer Stack is your go-to destination for all things music production.
 
 Features
