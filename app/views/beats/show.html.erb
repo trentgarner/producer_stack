@@ -1,0 +1,93 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/4.0.1/wavesurfer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/4.0.1/plugin/wavesurfer.medielement.min.js"></script>
+
+<div class="container">
+  <h1 class="text-center mt-4"><%= @beat.title %></h1>
+  <div class="d-flex justify-content-center">
+    <div class="col-md-4 mr-4 d-flex justify-content-center">
+      <% if @beat.cover_art.present? %>
+        <%= image_tag url_for(@beat.cover_art), class: "img-fluid", style: "max-height: 300px; max-width: 300px;" %>
+      <% else %>
+        <%= image_tag "producer_stack.svg", class: "img-fluid", style: "max-height: 300px; max-width: 300px;" %>
+      <% end %>
+    </div>
+    <div class="col-md-8 mb-3">
+      <hr>
+      <div class="mb-1">
+        <p class="mb-1"><strong>Producer:</strong> <%= @beat.artist %></p>
+        <p class="mb-1"><strong>Genre:</strong> <%= @beat.genre %></p>
+        <p class="mb-1"><strong>Description:</strong> <%= @beat.description %></p>
+      </div>
+      <% if @beat.beat.present? %>
+        <div class="audio-player mt-3">
+          <!-- Add a container for the waveform visualization -->
+          <div id="waveform" style="width: 100%; height: 150px; margin-bottom: -40px;"></div>
+          <div class="btn-group mt-0">
+            <!-- Play/Pause Button -->
+            <button id="play-pause" class="btn btn-danger">
+              <i class="fas fa-play"></i> 
+            </button>
+            <!-- Download Button -->
+            <a href="<%= @beat.beat_file_url %>" download="<%= @beat.title %>.wav" class="btn btn-danger text-light mr-3" style="border-start-end-radius: 5px; border-start-end-radius: 5px;">Download</a> 
+            <!-- Volume Control -->
+            <div class="d-flex align-items-center ms-3">
+              <label for="volume" class="me-2">Volume:</label>
+              <input id="volume" type="range" min="0" max="1" step="0.01" value="1" class="form-range" style="width: 80px; color: red;">
+            </div>
+          </div>
+        </div>
+        <!-- Initialize Wavesurfer.js -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var wavesurfer = WaveSurfer.create({
+              container: '#waveform',
+              waveColor: '#bcb9b8',
+              progressColor: '#f24545',
+              cursorColor: '#666666',
+              cursorWidth: 3,
+              barWidth: 3,
+              barHeight: 2,
+              barGap: null,
+              hideScrollbar: true,
+              normalize: true,
+              height: 75,
+              backend: 'MediaElement', // Use the MediaElement backend for audio controls
+            });
+
+            wavesurfer.load('<%= @beat.beat_file_url %>');
+
+            // Add event listener to Play/Pause button
+            var playPauseButton = document.querySelector('#play-pause');
+            playPauseButton.addEventListener('click', function () {
+              wavesurfer.playPause();
+              if (wavesurfer.isPlaying()) {
+                playPauseButton.textContent = 'Pause';
+              } else {
+                playPauseButton.textContent = 'Play';
+              }
+            });
+
+            // Add event listener to Volume Control
+            var volumeControl = document.querySelector('#volume');
+            volumeControl.addEventListener('input', function () {
+              wavesurfer.setVolume(parseFloat(volumeControl.value));
+            });
+          });
+        </script>
+      <% else %>
+        <p class="text-center">No audio available for this beat.</p>
+      <% end %>
+      <small class="text-muted float-end"> <%= @beat.updated_at.strftime('%B %e, %Y %l:%M %p') %></small>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <div class="actions m-4">
+    <% if @beat.user == current_user %>
+      <%= link_to "Edit", edit_beat_path(@beat), class: "btn btn-info mt-3" %>
+      <%= link_to "Delete", beat_path(@beat), method: :delete, data: { confirm: "Are you sure you want to delete this beat?" }, class: "btn btn-danger mt-3" %>
+    <% end %>
+    <%= link_to "Back to Beats", beats_path, class: "btn btn-dark mt-3" %>
+  </div>
+</div>

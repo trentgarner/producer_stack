@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="card" style="position: relative; z-index: 5; bottom: 250px;">
+      <div class="card-header text-center bg-dark text-light">
+        <h2>Upload Your Beats</h2>
+      </div>
+      <div class="card-body p-5">
+        <%= form_with model: @beat, url: beats_path, method: :post, local: true, multipart: true do |form| %>
+          <div class="form-group mb-3">
+            <%= form.label :title %>
+            <%= form.text_field :title, class: 'form-control', required: true %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :artist %>
+            <%= form.text_field :artist, class: 'form-control', required: true %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :genre %>
+            <%= form.select :genre, options_for_select(['Trap', 'RnB', 'Pop', 'Hip Hop', 'Jazz', 'Electronic', 'Classical', 'Other']), { prompt: 'Select Genre' }, class: 'form-control', required: true %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :description %>
+            <%= form.text_area :description, placeholder: 'A description of your songs vibe..', class: 'form-control' %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :cover_art %>
+            <%= form.file_field :cover_art, class: 'form-control' %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :beat %>
+            <%= form.file_field :beat, class: 'form-control', required: true %>
+          </div>
+          <div class="actions text-center">
+            <%= form.submit 'Upload Beat', class: 'btn btn-info col-6 mt-3' %>
+          </div>
+        <% end %>
+        <hr>
+        <div class="text-center">
+          <div class="actions">
+            <%= link_to "Cancel", beats_path(@beat), class: "btn btn-dark mt-3" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
