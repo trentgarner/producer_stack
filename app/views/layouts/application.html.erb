@@ -60,7 +60,7 @@
               </li>
             <% else %>
               <li class="nav-item">
-                <a class="nav-link" href="#">Sign up</a>
+                <a class="nav-link" href="<%= new_user_registration_path %>">Sign up</a>
               </li>
               <li class="nav-item">
                 <%= button_to "Sign In", new_user_session_path, class: "btn btn-info dropdown-item" %>
@@ -78,7 +78,7 @@
                   <li><a class="dropdown-item" href="<%= admin_dashboard_path %>">Admin Dashboard</a></li>
                 <% end %>
                 <li><a class="dropdown-item" href="<%= blogs_path %>">Blog</a></li>
-                <li><a class="dropdown-item" href="#">Community</a></li>
+                <li><a class="dropdown-item" href="<%= users_path %>">Community</a></li>
                 <li><a class="dropdown-item" href="<%= beats_path %>">Beats</a></li>
                 <hr class="dropdown-divider">
                 <% if current_user %>

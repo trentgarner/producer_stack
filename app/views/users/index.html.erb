@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <h2 class="text-center me-3">Community</h2>
+      <div class="row">
+        <div class="col-lg-12 mb-4">
+          <table class="table table-striped text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>User Name</th>
+                <th>Blogs</th>
+                <th>Beats</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |u| %>
+                <tr>
+                  <td><%= link_to u.full_name, user_path(u) %></td>
+                  <td><%= u.blogs.count %></td>
+                  <td><%= u.beats.count %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,81 +1,77 @@
-<div class="row">
-  <div class="col text-center">
-    <h1 class="me-3"><%= @user.first_name%>'s Profile</h1>
-  </div>
 <div class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-md-10">
-      <h2 class="text-center me-3">Your Stats</h2>
-      <div class="row justify-content-center">
-        <div class="col-md-10">
-          <div class="row">
-            <div class="col-lg-12 mb-4">
-              <table class="table table-striped text-center">
+      <h2 class="text-center me-3"><%= @user.full_name %>'s Profile</h2>
+      <div class="row">
+        <div class="col-lg-12 mb-4">
+          <!-- <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><%= @user.full_name %></td>
+                <td><%= @user.email %></td>
+              </tr>
+            </tbody>
+          </table> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 mb-4">
+          <h2 class="text-center me-3"> Blog Posts </h2>
+          <div style="overflow: auto; max-height: 400px;">
+            <% if @user.blogs.present? %>
+              <table class="table table-bordered table-striped text-center">
                 <thead class="table-dark">
                   <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>Blog Title</th>
+                    <th>Content</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><%= @user.first_name %></td>
-                    <td><%= @user.email %></td>
-                  </tr>
+                  <% @user.blogs.each do |blog| %>
+                    <tr>
+                      <td><%= link_to blog.title, blog_path(blog) %></td>
+                      <td><%= truncate_words(blog.content, 5) %></td>
+                    </tr>
+                  <% end %>
                 </tbody>
               </table>
-            </div>
+            <% else %>
+              <p class= "text-center">No blogs posted.</>
+            <% end %>
           </div>
-
-          <div class="row">
-            <div class="col-lg-12 mb-4">
-              <div style="overflow: auto; max-height: 400px;">
-                <table class="table table-bordered table-striped text-center">
-                  <thead class="table-dark">
-                    <tr>
-                      <th>Blog ID</th>
-                      <th>Title</th>
-                      <th>Content</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% @user.blogs.each do |blog| %>
-                      <tr>
-                        <td><%= blog.id %></td>
-                        <td><%= link_to blog.title, blog_path(blog) %></td>
-                        <td><%= truncate_words(blog.content, 5)%></td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-
-
-      <%
-=begin%>
- <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @beats.each do |beat| %>
-            <tr>
-              <td><%= beat.id %></td>
-              <td><%= beat.title %></td>
-            </tr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 mb-4">
+        <h2 class="text-center me-3"> Beats </h2>
+          <% if @beats.present? %>
+            <table class="table table-bordered table-striped text-center">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @beats.each do |beat| %>
+                  <tr>
+                    <td><%= beat.id %></td>
+                    <td><%= beat.title %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p class= "text-center">No beats uploaded.</p>
           <% end %>
-        </tbody>
-      </table> 
-<%
-=end%>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
 </div>
