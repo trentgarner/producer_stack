@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update]
 
   def index
     @users = User.all
@@ -20,8 +20,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user = User.find(params[:id])
     @user.destroy
-    redirect_to users_url, flash: { notice: 'User was successfully destroyed.' }
+    redirect_to users_path, notice: 'User was successfully deleted.'
   end
 
   private
@@ -32,6 +33,8 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by_id(params[:id])
+    @current_user = current_user
     redirect_to users_url, alert: 'User not found' if @user.nil?
   end
+
 end

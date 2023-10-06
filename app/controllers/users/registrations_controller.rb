@@ -23,7 +23,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  # GET /resource/edit
   # def edit
   #   super
   # end
@@ -72,7 +71,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def signup_params
-    params.require(:user).permit(:name, :email, :password, :pasword_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name)
   end
 
   def account_update_params
