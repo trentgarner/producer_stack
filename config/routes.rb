@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users, controller: {
-    registrations: 'registrations'
-  }
+  devise_for :users, controllers: { registrations: 'users/registrations' }
+
+  
 
   root "application#router"
 
@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :users 
   namespace :admin do 
     get 'dashboard', to: 'users#admin_dashboard'
-    resources :users
+    
   end
 
   resources :blogs

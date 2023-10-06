@@ -2,10 +2,10 @@
   <div class="col-4 offset-4">
     <div class="card" style="z-index: 5; bottom: 250px; ">
       <div class="card-header text-center bg-dark text-light">
-        <h2>Sign up</h2>
+        <h2>Edit</h2>
       </div>
       <div class="card-body p-5">
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= form_for(@user, url: user_path(@user), method: :patch) do |f| %>
           <div class="field mb-1">
             <%= f.label :first_name %><br />
             <%= f.text_field :first_name, class: "form-control" %>
@@ -23,16 +23,16 @@
 
           <div class="field mb-1">
             <%= f.label :password %><br />
-            <%= f.password_field :password, class: "form-control" %>
+            <%= f.password_field :password, class: "form-control", required: true %>
           </div>
 
           <div class="field mb-1">
             <%= f.label :password_confirmation %><br />
-            <%= f.password_field :password_confirmation, class: "form-control" %>
+            <%= f.password_field :password_confirmation, class: "form-control", required: true %>
           </div>
 
           <div class="actions text-center">
-            <%= f.submit "Sign Up", class: "btn btn-info col-6 mt-3" %>
+            <%= f.submit "Confirm", class: "btn btn-info col-6 mt-3" %>
           </div>
         <% end %>
         <hr>
