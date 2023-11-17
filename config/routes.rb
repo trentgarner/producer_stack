@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :users 
   namespace :admin do 
     get 'dashboard', to: 'users#admin_dashboard'
+    resources :users 
+
     
   end
 
