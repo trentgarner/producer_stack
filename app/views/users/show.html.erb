@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-lg-12 mb-4">
         <h2 class="text-center me-3">Beats</h2>
-          <% if @beats.present? %>
+          <% if @user.beats.present? %>
             <table class="table table-bordered table-striped text-center">
               <thead>
                 <tr>
@@ -41,7 +41,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @beats.each do |beat| %>
+                <% @user.beats.each do |beat| %>
                   <tr>
                     <td><%= beat.id %></td>
                     <td><%= beat.title %></td>
