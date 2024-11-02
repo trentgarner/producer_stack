@@ -7,6 +7,13 @@ Rails.application.routes.draw do
 
   resources :users 
 
+  resources :analyze, only: [:index] do
+    collection do
+      post 'upload'
+    end
+  end
+    
+
   namespace :admin do 
     resources :users, only: [:index, :show, :edit, :update, :destroy]
     get 'dashboard', to: 'users#admin_dashboard'
