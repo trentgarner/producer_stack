@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="card" style="position: relative; z-index: 5; bottom: 250px;">
+      <div class="card-header text-center bg-dark text-light">
+        <h2>Upload Your Beats for Analysis</h2>
+      </div>
+      <div class="card-body p-5">
+        <%= form_with url: upload_analyze_index_path, method: :post, local: true, multipart: true do |form| %>
+          <div class="form-group mb-3">
+            <%= form.label :audio_file, 'Choose Your Audio File' %>
+            <%= form.file_field :audio_file, class: 'form-control', required: true %>
+          </div>
+          <div class="actions text-center">
+            <%= form.submit 'Analyze Beat', class: 'btn btn-info col-6 mt-3' %>
+          </div>
+        <% end %>
+        <hr>
+        <div class="text-center">
+          <div class="actions">
+            <%= link_to "Cancel", analyze_index_path, class: "btn btn-dark mt-3" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
