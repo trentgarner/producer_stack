@@ -1,72 +1,78 @@
 class AnalyzeController < ApplicationController
-  require 'net/http'
-  require 'uri'
-  require 'json'
+  def index
+    @analysis_data = nil
+  end
 
   def upload
-    audio_file = params[:audio_file]
+    uploaded_file = params[:audio_file]
 
-    if audio_file
-      # Upload the file to a public URL (e.g., using S3) - This part may need a helper or service
-      public_url = upload_to_s3(audio_file) # Replace with actual S3 upload code
+    if uploaded_file
+      file_path = save_audio_file(uploaded_file)
 
-      if public_url
-        access_token = fetch_access_token
-        puts "Access Token: #{access_token}"
+      # Perform analysis using aubio
+      @analysis_data = analyze_audio(file_path)
 
-        if access_token
-          uri = URI("https://api.dolby.com/media/analyze")
-          request = Net::HTTP::Post.new(uri)
-          request["Authorization"] = "Bearer #{access_token}"
-          request["Content-Type"] = "application/json"
-          request.body = { url: public_url }.to_json
-
-          response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-            http.request(request)
-          end
-
-          puts "Response Code: #{response.code}"
-          puts "Response Body: #{response.body}"
-
-          if response.is_a?(Net::HTTPSuccess)
-            @analysis_results = JSON.parse(response.body)
-            render json: @analysis_results
-          else
-            render json: { error: "Analysis failed: #{response.message}" }, status: :unprocessable_entity
-          end
-        else
-          render json: { error: "Failed to fetch access token" }, status: :unauthorized
-        end
+      if @analysis_data
+        render :index
       else
-        render json: { error: "File upload failed" }, status: :unprocessable_entity
+        flash[:error] = "There was an error analyzing the audio."
+        render :index
       end
     else
-      render json: { error: "No audio file uploaded" }, status: :unprocessable_entity
+      flash[:error] = "No file uploaded"
+      render :index
     end
   end
 
   private
 
-  def fetch_access_token
-    uri = URI("https://api.dolby.io/v1/auth/token")
-    request = Net::HTTP::Post.new(uri)
-    request.set_form([["grant_type", "client_credentials"], ["expires_in", 1800]], "application/x-www-form-urlencoded")
-    request.basic_auth(ENV['DOLBY_API_KEY'], ENV['DOLBY_API_SECRET'])
+  def save_audio_file(file)
+    # Ensure the uploads directory exists
+    uploads_dir = Rails.root.join('public', 'uploads')
+    FileUtils.mkdir_p(uploads_dir) unless File.exist?(uploads_dir)
 
-    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-      http.request(request)
+    # Save the uploaded file to disk
+    file_path = uploads_dir.join(file.original_filename)
+    File.open(file_path, 'wb') do |f|
+      f.write(file.read)
     end
+    file_path
+  end
 
-    if response.is_a?(Net::HTTPSuccess)
-      JSON.parse(response.body)["access_token"]
-    else
-      puts "Error fetching access token: #{response.body}"
+  def analyze_audio(file_path)
+    require 'aubio'
+  
+    begin
+      # Convert file_path to a string before passing it to Aubio
+      my_file = Aubio.open(file_path.to_s)
+  
+      # Extract BPM (beats per minute)
+      bpm_data = my_file.beats.to_a
+      bpm = bpm_data.map { |beat| beat[:s] }
+  
+      # Ensure bpm is a float if available, otherwise default to 0.0
+      bpm = bpm.first.to_f if bpm.any?
+  
+      # Extract Key (using pitches as an example)
+      key = my_file.pitches.to_a.first || "Unknown"
+  
+      # Example: Use the first beat or set to "Unknown" if not available
+      time_signature = bpm != 0.0 ? bpm : "Unknown"
+  
+      # Calculate the duration of the audio file
+      duration = File.size(file_path).to_f / (44100 * 2 * 2) # 44.1kHz sample rate, 16-bit stereo
+  
+      {
+        bpm: bpm,
+        key: key,
+        time_signature: time_signature,
+        duration: duration
+      }
+  
+    rescue => e
+      Rails.logger.error("Error analyzing audio: #{e.message}")
       nil
     end
-  end
-
-  # Implement the actual S3 upload logic here or in a separate service class
-  def upload_to_s3(audio_file)
-    # S3 upload code should go here; return the public URL of the file
-  end
+  end  
+  
 end
