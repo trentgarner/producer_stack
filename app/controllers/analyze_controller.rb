@@ -1,78 +1,70 @@
+# app/controllers/analyze_controller.rb
+
+require 'open3'
+
 class AnalyzeController < ApplicationController
   def index
-    @analysis_data = nil
+    # Display the upload form and any previously analyzed data
   end
 
   def upload
-    uploaded_file = params[:audio_file]
+    if params[:audio_file].present?
+      # Save the uploaded file to a local path
+      file = params[:audio_file]
+      file_path = Rails.root.join('public', 'uploads', file.original_filename)
+      File.open(file_path, 'wb') { |f| f.write(file.read) }
 
-    if uploaded_file
-      file_path = save_audio_file(uploaded_file)
-
-      # Perform analysis using aubio
-      @analysis_data = analyze_audio(file_path)
+      # Call the analyze_audio method to get audio analysis data
+      @analysis_data = analyze_audio(file_path.to_s)
 
       if @analysis_data
         render :index
       else
-        flash[:error] = "There was an error analyzing the audio."
-        render :index
+        flash[:error] = "Audio analysis failed. Please try again."
+        redirect_to analyze_index_path
       end
     else
-      flash[:error] = "No file uploaded"
-      render :index
+      flash[:error] = "No audio file provided."
+      redirect_to analyze_index_path
     end
   end
 
   private
 
-  def save_audio_file(file)
-    # Ensure the uploads directory exists
-    uploads_dir = Rails.root.join('public', 'uploads')
-    FileUtils.mkdir_p(uploads_dir) unless File.exist?(uploads_dir)
-
-    # Save the uploaded file to disk
-    file_path = uploads_dir.join(file.original_filename)
-    File.open(file_path, 'wb') do |f|
-      f.write(file.read)
-    end
-    file_path
-  end
-
   def analyze_audio(file_path)
-    require 'aubio'
-  
+    analysis = { bpm: "Unavailable", key: "Unavailable", duration: "Unknown" }
+
     begin
-      # Convert file_path to a string before passing it to Aubio
-      my_file = Aubio.open(file_path.to_s)
-  
-      # Extract BPM (beats per minute)
-      bpm_data = my_file.beats.to_a
-      bpm = bpm_data.map { |beat| beat[:s] }
-  
-      # Ensure bpm is a float if available, otherwise default to 0.0
-      bpm = bpm.first.to_f if bpm.any?
-  
-      # Extract Key (using pitches as an example)
-      key = my_file.pitches.to_a.first || "Unknown"
-  
-      # Example: Use the first beat or set to "Unknown" if not available
-      time_signature = bpm != 0.0 ? bpm : "Unknown"
-  
-      # Calculate the duration of the audio file
-      duration = File.size(file_path).to_f / (44100 * 2 * 2) # 44.1kHz sample rate, 16-bit stereo
-  
-      {
-        bpm: bpm,
-        key: key,
-        time_signature: time_signature,
-        duration: duration
-      }
-  
+      # Analyze tempo (BPM) using Aubio CLI
+      bpm_command = "aubio tempo '#{file_path}'"
+      bpm_output, bpm_error = Open3.capture3(bpm_command)
+      if bpm_error.empty? && bpm_output.present?
+        bpm = bpm_output.match(/(\d+\.\d+)/)[1]
+        analysis[:bpm] = bpm || "Unavailable"
+      else
+        Rails.logger.error("Aubio tempo error: #{bpm_error}")
+      end
+
+      # Analyze key using Aubio CLI
+      key_command = "aubio pitch '#{file_path}'"
+      key_output, key_error = Open3.capture3(key_command)
+      if key_error.empty? && key_output.present?
+        key = key_output.match(/(\w+)/)[1]
+        analysis[:key] = key || "Unavailable"
+      else
+        Rails.logger.error("Aubio pitch error: #{key_error}")
+      end
+
+      # Additional optional analysis (duration) - example
+      duration_command = "ffmpeg -i '#{file_path}' 2>&1 | grep Duration"
+      duration_output, _ = Open3.capture2(duration_command)
+      duration_match = duration_output.match(/Duration: (\d+:\d+:\d+\.\d+)/)
+      analysis[:duration] = duration_match[1] if duration_match
+
+      analysis
     rescue => e
       Rails.logger.error("Error analyzing audio: #{e.message}")
       nil
     end
-  end  
-  
+  end
 end

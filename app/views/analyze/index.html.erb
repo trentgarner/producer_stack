@@ -22,14 +22,14 @@
             <p><strong>Tempo (BPM):</strong> <%= @analysis_data[:bpm] %></p>
             <p><strong>Key:</strong> <%= @analysis_data[:key] %></p>
             <p><strong>Time Signature:</strong> <%= @analysis_data[:time_signature] %></p>
-            <p><strong>Duration (seconds):</strong> <%= @analysis_data[:duration] %></p>
+            <p><strong>Duration:</strong> <%= @analysis_data[:duration] %></p>
           </div>
-        <% end %>
-
-        <% if flash[:error] %>
-          <div class="alert alert-danger mt-3 text-center">
-            <%= flash[:error] %>
-          </div>
+        <% else %>
+          <% if flash[:error] %>
+            <div class="alert alert-danger mt-3 text-center">
+              <%= flash[:error] %>
+            </div>
+          <% end %>
         <% end %>
 
         <hr>
