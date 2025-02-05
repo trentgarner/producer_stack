@@ -74,8 +74,9 @@
                   <% if user_signed_in? && current_user.role == "admin" %>
                     <li><a class="dropdown-item" href="<%= admin_dashboard_path %>">Admin Dashboard</a></li>
                   <% end %>
-                  <li><a class="dropdown-item" href="<%= blogs_path %>">Blog</a></li>
+                  <!-- dashboard path needed? !-->
                   <li><a class="dropdown-item" href="<%= users_path %>">Community</a></li>
+                  <li><a class="dropdown-item" href="<%= blogs_path %>">Blog</a></li>
                   <li><a class="dropdown-item" href="<%= beats_path %>">Beats</a></li>
                   <li><a class="dropdown-item" href="<%= analyze_index_path %>">Analyze Beats</a></li>
                   <hr class="dropdown-divider">

@@ -53,6 +53,15 @@ gem 'figaro'
 
 gem 'aubio'
 
+#===============================================================================
+
+# RUN BUNDLE INSTALL WHEN READY FOR PRODUCTION SUITE
+
+# gem 'music_theory'
+# gem 'audio_analysis'
+# gem 'coltrane'
+
+#===============================================================================
 
 
 

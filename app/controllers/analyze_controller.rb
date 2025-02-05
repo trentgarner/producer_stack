@@ -1,20 +1,15 @@
-# app/controllers/analyze_controller.rb
-
-require 'open3'
-
 class AnalyzeController < ApplicationController
+  require 'open3'
+
   def index
-    # Display the upload form and any previously analyzed data
   end
 
   def upload
     if params[:audio_file].present?
-      # Save the uploaded file to a local path
       file = params[:audio_file]
       file_path = Rails.root.join('public', 'uploads', file.original_filename)
       File.open(file_path, 'wb') { |f| f.write(file.read) }
 
-      # Call the analyze_audio method to get audio analysis data
       @analysis_data = analyze_audio(file_path.to_s)
 
       if @analysis_data
@@ -35,7 +30,6 @@ class AnalyzeController < ApplicationController
     analysis = { bpm: "Unavailable", key: "Unavailable", duration: "Unknown" }
 
     begin
-      # Analyze tempo (BPM) using Aubio CLI
       bpm_command = "aubio tempo '#{file_path}'"
       bpm_output, bpm_error = Open3.capture3(bpm_command)
       if bpm_error.empty? && bpm_output.present?

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'home', to: 'application#home'
 
   resources :users
+  resources :blogs
+  resources :beats
 
   resources :analyze, only: [:index] do
     collection do
@@ -18,6 +20,4 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'users#admin_dashboard'
   end
 
-  resources :blogs
-  resources :beats
 end

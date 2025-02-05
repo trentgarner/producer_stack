@@ -34,16 +34,16 @@
         <h2 class="text-center me-3">Beats</h2>
           <% if @user.beats.present? %>
             <table class="table table-bordered table-striped text-center">
-              <thead>
+              <thead class="table-dark">
                 <tr>
-                  <th>ID</th>
+                  <th>Artist</th>
                   <th>Title</th>
                 </tr>
               </thead>
               <tbody>
                 <% @user.beats.each do |beat| %>
                   <tr>
-                    <td><%= beat.id %></td>
+                    <td><%= beat.artist %></td>
                     <td><%= beat.title %></td>
                   </tr>
                 <% end %>
