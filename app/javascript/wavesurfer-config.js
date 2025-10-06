@@ -1,8 +1,5 @@
-
-
-// Define your Wavesurfer configuration
-const wavesurferConfig = {
-  container: 'body',
+const defaultConfig = {
+  container: null,
   height: 74,
   splitChannels: false,
   normalize: true,
@@ -17,7 +14,6 @@ const wavesurferConfig = {
   barAlign: '',
   minPxPerSec: 1,
   fillParent: true,
-  url: '/wavesurfer-code/examples/audio/audio.wav',
   mediaControls: true,
   autoplay: false,
   interact: true,
@@ -29,8 +25,10 @@ const wavesurferConfig = {
   sampleRate: 48000
 };
 
-// Initialize Wavesurfer with the configuration
-const wavesurfer = WaveSurfer.create(wavesurferConfig);
+export function buildWaveSurferConfig(overrides = {}) {
+  return { ...defaultConfig, ...overrides };
+}
 
-// Load your audio file
-wavesurfer.load(wavesurferConfig.url);
+if (typeof window !== 'undefined') {
+  window.buildWaveSurferConfig = buildWaveSurferConfig;
+}
