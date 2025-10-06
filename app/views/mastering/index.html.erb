@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <div class="card" style="position: relative; z-index: 5; bottom: 250px;">
+      <div class="card-header text-center bg-dark text-light">
+        <h2>Master Your Track</h2>
+      </div>
+      <div class="card-body p-5">
+        <% if flash[:error].present? %>
+          <div class="alert alert-danger text-center"><%= flash[:error] %></div>
+        <% elsif flash[:notice].present? %>
+          <div class="alert alert-success text-center"><%= flash[:notice] %></div>
+        <% end %>
+
+        <%= form_with url: upload_mastering_index_path, method: :post, local: true, multipart: true do |form| %>
+          <div class="form-group mb-3">
+            <%= form.label :audio_file, 'Choose an audio file' %>
+            <%= form.file_field :audio_file, class: 'form-control', required: true %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :preset, 'Select a vibe' %>
+            <% preset_options = Mastering::SoxMasteringService::PRESET_LABELS.map { |key, label| [label, key] } %>
+            <%= form.select :preset, options_for_select(preset_options, params[:preset]), {}, class: 'form-control' %>
+          </div>
+          <div class="actions text-center">
+            <%= form.submit 'Master Track', class: 'btn btn-info col-6 mt-3' %>
+          </div>
+        <% end %>
+
+        <% if @mastering_result %>
+          <hr>
+          <div class="mt-4 text-center">
+            <h4>Your Mastered Track</h4>
+            <p><strong>Preset:</strong> <%= params[:preset].presence || 'standard' %></p>
+            <% if @mastering_result.details.present? %>
+              <p class="mb-1"><strong>Peak:</strong> <%= @mastering_result.details[:peak] %></p>
+              <p class="mb-1"><strong>RMS:</strong> <%= @mastering_result.details[:rms] %></p>
+            <% end %>
+            <a href="<%= @mastering_result.public_url %>" class="btn btn-success mt-2" download>Download Mastered Track</a>
+          </div>
+        <% end %>
+
+        <hr>
+        <div class="text-center">
+          <div class="actions">
+            <%= link_to 'Back', user_path(current_user), class: 'btn btn-dark mt-3' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

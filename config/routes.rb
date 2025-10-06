@@ -15,6 +15,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :mastering, only: [:index] do
+    collection do
+      post 'upload'
+    end
+  end
+
   namespace :admin do 
     resources :users, only: [:index, :show, :edit, :update, :destroy]
     get 'dashboard', to: 'users#admin_dashboard'
