@@ -1,8 +1,11 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 
 // Remove the ES6 import statements
-//= require es-module-shims.min
+import "jquery";
+import "bootstrap";
 import './wavesurfer-config'; // Include your custom Wavesurfer configuration file
+import "essentia";
+
 // import "popper"
 // import "bootstrap"
 
@@ -16,3 +19,10 @@ document.addEventListener("turbo:load", function () {
   });
 });
 
+// essentia.js
+$(document).on('ajaxSend', function (e, xhr, options) {
+  var token = $('meta[name="csrf-token"]').attr('content');
+  if (token) {
+    xhr.setRequestHeader('X-CSRF-Token', token);
+  }
+});

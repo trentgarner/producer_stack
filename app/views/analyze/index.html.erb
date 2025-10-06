@@ -6,6 +6,7 @@
       </div>
       <div class="card-body p-5">
         <%= form_with url: upload_analyze_index_path, method: :post, local: true, multipart: true do |form| %>
+          <%= csrf_meta_tags %>
           <div class="form-group mb-3">
             <%= form.label :audio_file, 'Choose Your Audio File' %>
             <%= form.file_field :audio_file, class: 'form-control', required: true %>
@@ -14,6 +15,23 @@
             <%= form.submit 'Analyze Beat', class: 'btn btn-info col-6 mt-3' %>
           </div>
         <% end %>
+
+        <% if @analysis_data %>
+          <div class="mt-4 text-center">
+            <h4>Audio Analysis</h4>
+            <p><strong>Tempo (BPM):</strong> <%= @analysis_data[:bpm] %></p>
+            <p><strong>Key:</strong> <%= @analysis_data[:key] %></p>
+            <p><strong>Time Signature:</strong> <%= @analysis_data[:time_signature] %></p>
+            <p><strong>Duration:</strong> <%= @analysis_data[:duration] %></p>
+          </div>
+        <% else %>
+          <% if flash[:error] %>
+            <div class="alert alert-danger mt-3 text-center">
+              <%= flash[:error] %>
+            </div>
+          <% end %>
+        <% end %>
+
         <hr>
         <div class="text-center">
           <div class="actions">

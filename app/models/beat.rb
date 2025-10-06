@@ -1,4 +1,6 @@
 class Beat < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   mount_uploader :beat, BeatUploader
   has_one_attached :cover_art
   belongs_to :user
@@ -11,18 +13,26 @@ class Beat < ApplicationRecord
   validates :bit_depth, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
 
   def beat_file_url
-    beat.url # Use .url to get the URL
+    return unless beat.present?
+
+    beat.url
   end
 
   def beat_file_content_type
+    return unless beat.present?
+
     beat.content_type
   end
 
   def cover_art_url
-    cover_art.url # Use .url to get the URL
+    return unless cover_art.attached?
+
+    rails_blob_path(cover_art, only_path: true)
   end
 
   def cover_art_content_type
-    cover_art.content_type
+    return unless cover_art.attached?
+
+    cover_art.blob.content_type
   end
 end

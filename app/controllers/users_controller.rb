@@ -33,7 +33,6 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by_id(params[:id])
-    @current_user = current_user
     redirect_to users_url, alert: 'User not found' if @user.nil?
   end
 

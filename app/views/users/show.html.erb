@@ -34,16 +34,16 @@
         <h2 class="text-center me-3">Beats</h2>
           <% if @user.beats.present? %>
             <table class="table table-bordered table-striped text-center">
-              <thead>
+              <thead class="table-dark">
                 <tr>
-                  <th>ID</th>
+                  <th>Artist</th>
                   <th>Title</th>
                 </tr>
               </thead>
               <tbody>
                 <% @user.beats.each do |beat| %>
                   <tr>
-                    <td><%= beat.id %></td>
+                    <td><%= beat.artist %></td>
                     <td><%= beat.title %></td>
                   </tr>
                 <% end %>
@@ -57,7 +57,7 @@
     </div>
     <div class="text-center">
       <div class="actions m-4">
-        <% if @current_user.admin? || (@current_user == @user) %>
+        <% if current_user&.admin? || (current_user == @user) %>
           <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-info mt-3" %>
           <%= link_to "Delete Account", user_path(@user), method: :delete, data: { confirm: "Are you sure you want to delete this user?" }, class: "btn btn-danger mt-3" %>
         <% end %>

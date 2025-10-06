@@ -5,11 +5,9 @@ Rails.application.configure do
 
   # Precompile additional assets. Defaults to [application.js, application.css, favicon.ico, manifest.json, manifest.js]
   config.assets.precompile ||= []
-  config.assets.precompile += ['es-module-shims.min.js']
 
   # Preload additional assets. Defaults to [ActionCable, ActionText, and all UJS helpers]
   config.assets.preload ||= []
-  config.assets.preload << 'es-module-shims.min.js'
 
   # Code is not reloaded between requests.
   config.cache_classes = true

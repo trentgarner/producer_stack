@@ -1,11 +1,10 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.0"
-#rbenv local x.x.x
+ruby "3.3.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.3", ">= 7.0.3.1"
+gem "rails", "~> 7.2.2.2", ">= 7.2.2.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -50,6 +49,20 @@ gem 'railties'
 gem 'httparty'
 
 gem 'figaro'
+
+gem 'aubio'
+
+#===============================================================================
+
+# RUN BUNDLE INSTALL WHEN READY FOR PRODUCTION SUITE
+
+# gem 'music_theory'
+# gem 'audio_analysis'
+# gem 'coltrane'
+
+#===============================================================================
+
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

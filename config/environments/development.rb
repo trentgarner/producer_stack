@@ -3,6 +3,7 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   ENV["DOLBY_API_KEY"]
 
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -36,12 +37,11 @@ Rails.application.configure do
   end
 
   # Precompile additional assets. Defaults to [application.js, application.css, favicon.ico, manifest.json, manifest.js]
+  config.assets.compile = true
   config.assets.precompile ||= []
-  config.assets.precompile += ['es-module-shims.min.js']
 
   # Preload additional assets. Defaults to [ActionCable, ActionText, and all UJS helpers]
   config.assets.preload ||= []
-  config.assets.preload << 'es-module-shims.min.js'
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
