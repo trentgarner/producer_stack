@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_02_07_013326) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_10_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,11 +58,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_07_013326) do
     t.integer "downloads_count", default: 0
     t.integer "plays_count", default: 0
     t.decimal "rating", precision: 10
-    t.binary "cover_art"
-    t.string "cover_art_url"
-    t.string "beat_file_name"
-    t.string "beat_content_type"
-    t.integer "beat_file_size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
